@@ -1,0 +1,4 @@
+xpath=절대경로가 아니라 모든(*)또는 특정 태그(div)인데 [@id="login"]를 가지고 있는 element를 표시하는 경로 방법
+ex) 
+Xpath: //*[@id="account"]/div[1]/div/button
+Full Xpath: /html/body/div[2]/div[2]/div/div[2]/div/div[1]/div[1]/div[1]/div/button
