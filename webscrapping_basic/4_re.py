@@ -10,4 +10,4 @@ p = re.compile("ca.e")
 # $ (se$) : 문자열의 끝 > case, base (O) | face (X)
 
 m = p.match("case")
-print(m.group()) # 매치되지 않으면 
+print(m.group()) # 매치되지 않으면 에러가 발생
