@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36", "Accept-Language": "ko-KR,ko;q=0.8,en-US;q=0.5,en;q=0.3"}
 
 for i in range(1, 6):
+    print("page:", i)
     url = "https://www.coupang.com/np/search?q=%EB%85%B8%ED%8A%B8%EB%B6%81&channel=user&component=&eventCategory=SRP&trcid=&traid=&sorter=scoreDesc&minPrice=&maxPrice=&priceRange=&filterType=&listSize=36&filter=&isPriceRange=false&brand=&offerCondition=&rating=0&page={}&rocketAll=false&searchIndexingToken=1=9&backgroundColor=".format(i)
     
     res = requests.get(url, headers=headers)
@@ -18,7 +19,7 @@ for i in range(1, 6):
         # remove all AD
         ad_badge = item.find("span", attrs={"class":"ad-badge-text"})
         if ad_badge:
-            print("  <AD is removed>")
+            # print("  <AD is removed>")
             continue
 
 
@@ -26,7 +27,7 @@ for i in range(1, 6):
 
         # remove apple products
         if "Apple" in name:
-            print("  <Apple product is removed>")
+            # print("  <Apple product is removed>")
             continue
 
         price = item.find("strong", attrs={"class":"price-value"}).get_text() # 가격
@@ -36,7 +37,7 @@ for i in range(1, 6):
         if rate:
             rate = rate.get_text()
         else:
-            print("  <Item without rating is removed>")
+            # print("  <Item without rating is removed>")
             continue
         
         rate_cnt = item.find("span", attrs={"class":"rating-total-count"}) # 평점 수
@@ -44,8 +45,15 @@ for i in range(1, 6):
         if rate_cnt:
             rate_cnt = rate_cnt.get_text()[1:-1]
         else:
-            print("  <Item without rating is removed>")
+            # print("  <Item without rating is removed>")
             continue
 
+        link = item.find("a", attrs={"class":"search-product-link"})["href"]
+
         if float(rate) >= 4.5 and int(rate_cnt) >= 100:
-            print(name, price, rate, rate_cnt)
+            # print(name, price, rate, rate_cnt)
+            print(f"Product : {name}")
+            print(f"Price : {price}")
+            print(f"Rating : {rate} ({rate_cnt} Ratings)")
+            print("Link for Product : {}".format("https://www.coupang.com" + link))
+            print("-"*100) # line for devision
